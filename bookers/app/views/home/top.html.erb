@@ -1,0 +1,19 @@
+<% if flash[:notice] %>
+<p class="notice"><%= notice %></p>
+<% end %>
+<% if flash[:alert] %>
+<p class="alert"><%= alert %></p>
+<% end %>
+<div class="container">
+<%= yield %>
+</div>
+<h1>
+  <i class="fas fa-book"></i>bookers
+</h1>
+
+<li>
+  <%= link_to "Log in", new_user_session_path, class: "btn btn-secondary" %>
+</li>
+<li>
+  <%= link_to "Sign up", new_user_registration_path, class: "btn btn-secondary" %>
+</li>

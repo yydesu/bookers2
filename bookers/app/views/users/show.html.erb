@@ -1,0 +1,57 @@
+<% if flash[:notice] %>
+<p class="notice"><%= notice %></p>
+<% end %>
+<% if flash[:alert] %>
+<p class="alert"><%= alert %></p>
+<% end %>
+<div class="container">
+<%= yield %>
+</div>
+  <div class="row">
+    <div class="col-md-3">
+      <h4>User info</h4>
+      <table>
+        <tr>
+          <th><div class="profile-container"><%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg" %></th><th colspan="1"></div></th>
+        </tr>
+        <tr>
+          <td><label for="inputName">Name</label></td>
+          <td><h3 class="profile-name"><%= @user.name %></h3></td>
+        </tr>
+        <tr>
+          <td><label for="inputName">Introduction</label></td>
+          <td><h3 class="profile-introduction"><%= @user.introduction %></h3></td>
+        </tr>
+      </table>
+      <% if @user.id == current_user.id %>
+        <p><i class="fas fa-user-cog"></i><%= link_to "プロフィール編集", edit_user_path(@user), class: "btn btn-secondary" %></p>
+      <% end %>
+
+
+      <h1>New book</h1>
+      <%= form_with model: @book,url: books_path, local:true do |f| %>
+      <h4>Title</h4>
+      <%= f.text_field :title %>
+      <h4>Opinion</h4>
+      <%= f.text_area :body %><br>
+      <%= f.submit 'Create Book' %>
+      <% end %>
+    </div>
+
+    <div class="col-md-8 .offset-md-1">
+    <h1>Books</h1>
+    <table class="table table-striped">
+    <% @books.each do |book| %>
+    <%= link_to book_path(book.id) do %>
+      <tr>
+        <th colspan="1"></th><th>Title</th><th>Opinion</th>
+      </tr>
+      <tr>
+        <td><%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg" %></td>
+        <td><%= link_to book_path(book.id) do %><%= book.title %><% end %></td>
+        <td><%= book.body %></td>
+      </tr>
+    <% end %>
+    <% end %>
+    </table>
+  </div>
